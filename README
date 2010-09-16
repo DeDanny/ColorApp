@@ -1,0 +1,9 @@
+A application in clojue.
+
+I finds the mouse. Makes a gradiant started from the mouse position to the sides.
+
+for later:
+
+If mouse click new random color.
+
+The gradiant is calculated.
