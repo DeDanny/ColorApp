@@ -1,39 +1,58 @@
 (ns apl.color
     (:import (java.awt Color Dimension)
              (javax.swing JPanel JFrame Timer JOptionPane)
-             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)
-     ;        (javax.swing.event MouseInputAdapter)
-      )
-      )
+             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)))
 
-(def width 1200)
-(def height 400)
+(def width 600)
+(def height 200)
 (def bar-size 10)
 
-(defn printer [text]
+(defn main-bar []
+  {:location (/ width 2)
+   :red 210
+   :green 50
+   :blue 90})
+
+(defn printer [& text]
   (println text)
   )
 
-(defn color-panel []
+(defn set-zero-bar [main-bar x]
+   (dosync
+     (alter main-bar (assoc main-bar :location x))
+     ))
+
+(defn draw-balk [g x color]
+  (.setColor g color)
+  (.fillRect g x 0 bar-size height))
+
+(defn bar-calculator [g {x :location red :red green :green blue :blue}]
+    (draw-balk g x (Color. red green blue))
+  )
+
+(defn color-panel [frame main-bar]
   (proxy [JPanel MouseListener MouseMotionListener ] []
-    (mouseClicked [e]
+    (paintComponent [g]
+      (proxy-super paintComponent g)
+      (bar-calculator g @main-bar)
       )
+    (mouseMoved [e]
+      (printer (.getX e))
+      (set-zero-bar (@main-bar (.getX e)))
+      (.repaint this))
+    (mouseClicked [e])
     (mouseEntered [e])
     (mouseExited [e])
-    (mousePressed [e]
-      )
-    (mouseReleased [e]
-      (printer e))
-    (mouseMoved [e]
-      ;(printer e)
-      )
-    
+    (mousePressed [e])
+    (mouseReleased [e])
     )
   )
 
 (defn color-bar []
   (let [frame  (JFrame. "Color")
-        panel  (color-panel)]
+        main-bar (ref (main-bar))
+        panel  (color-panel frame main-bar)
+        ]
     (doto panel
       (.setFocusable true)
       (.addMouseListener panel)
@@ -45,5 +64,5 @@
       (.setVisible true)
       (.setSize width height)
       (.setLocationRelativeTo nil)
-    ))
+    )[main-bar])
   )
