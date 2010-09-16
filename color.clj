@@ -1,24 +1,28 @@
 (ns apl.color
     (:import (java.awt Color Dimension)
              (javax.swing JPanel JFrame Timer JOptionPane)
-             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)
-     ;        (javax.swing.event MouseInputAdapter)
-      )
-      )
+             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)))
 
-(def width 200)
-(def height 400)
+(def width 600)
+(def height 200)
 (def bar-size 10)
 
 (defn printer [text]
   (println text)
   )
 
+(defn bar-calculator [x]
+  (printer x))
+
+(defn draw-balk [g] )
+
 (defn color-panel []
   (proxy [JPanel MouseListener MouseMotionListener ] []
+    (paintComponent [g]
+      (proxy-super paintComponent g)
+      (paint g )
     (mouseMoved [e]
-      (printer (.getX e))
-      )
+      (bar-calculator (.getX e)))
     (mouseClicked [e])
     (mouseEntered [e])
     (mouseExited [e])
