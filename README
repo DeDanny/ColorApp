@@ -1,6 +1,6 @@
 A application in clojue.
 
-I finds the mouse. Makes a gradiant started from the mouse position to the sides.
+It finds the mouse. Makes a gradiant started from the mouse position to the sides.
 
 for later:
 
