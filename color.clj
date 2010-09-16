@@ -6,7 +6,7 @@
       )
       )
 
-(def width 1200)
+(def width 200)
 (def height 400)
 (def bar-size 10)
 
@@ -16,18 +16,14 @@
 
 (defn color-panel []
   (proxy [JPanel MouseListener MouseMotionListener ] []
-    (mouseClicked [e]
+    (mouseMoved [e]
+      (printer (.getX e))
       )
+    (mouseClicked [e])
     (mouseEntered [e])
     (mouseExited [e])
-    (mousePressed [e]
-      )
-    (mouseReleased [e]
-      (printer e))
-    (mouseMoved [e]
-      ;(printer e)
-      )
-    
+    (mousePressed [e])
+    (mouseReleased [e])
     )
   )
 
