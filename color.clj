@@ -5,10 +5,10 @@
 
 (def width 600)
 (def height 200)
-(def bar-size 500)
+(def bar-size 200)
 
 (defn main-bar []
-  {:location (/ width 2)
+  {:location (- (/ width 2) (/ bar-size 2))
    :red 210
    :green 50
    :blue 90})
