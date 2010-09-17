@@ -5,7 +5,7 @@
 
 (def width 600)
 (def height 200)
-(def bar-size 10)
+(def bar-size 500)
 
 (defn main-bar []
   {:location (/ width 2)
@@ -17,10 +17,14 @@
   (println text)
   )
 
+(defn x-update [main-bar x]
+    (assoc main-bar :location (- x (/ bar-size 2)))
+  )
+
 (defn set-zero-bar [main-bar x]
-   (dosync
-     (alter main-bar (assoc main-bar :location x))
-     ))
+  (dosync
+    (alter main-bar x-update x)
+       ))
 
 (defn draw-balk [g x color]
   (.setColor g color)
@@ -37,8 +41,7 @@
       (bar-calculator g @main-bar)
       )
     (mouseMoved [e]
-      (printer (.getX e))
-      (set-zero-bar (@main-bar (.getX e)))
+      (set-zero-bar main-bar (.getX e))
       (.repaint this))
     (mouseClicked [e])
     (mouseEntered [e])
