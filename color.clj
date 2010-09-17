@@ -3,15 +3,19 @@
              (javax.swing JPanel JFrame Timer JOptionPane)
              (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)))
 
-(def width 600)
-(def height 200)
-(def bar-size 200)
+(def width 1200)
+(def height 300)
+(def bar-size 10)
 
 (defn main-bar []
   {:location (- (/ width 2) (/ bar-size 2))
    :red 210
-   :green 50
-   :blue 90})
+   :green 210
+   :blue 210})
+
+;:red 210
+;   :green 50
+;   :blue 90
 
 (defn printer [& text]
   (println text)
