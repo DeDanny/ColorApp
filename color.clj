@@ -1,7 +1,10 @@
 (ns apl.color
     (:import (java.awt Color Dimension)
              (javax.swing JPanel JFrame Timer JOptionPane)
-             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent)))
+             (java.awt.event ActionListener MouseMotionListener MouseListener MouseAdapter MouseEvent))
+    (:require (clojure.contrib.math)
+              (clojure.contrib.generic.math-functions))
+ )
 
 (def width 1200)
 (def height 300)
@@ -9,13 +12,17 @@
 
 (defn main-bar []
   {:location (- (/ width 2) (/ bar-size 2))
-   :red 210
-   :green 210
-   :blue 210})
+   :red 4
+   :green 20
+   :blue 16})
 
-;:red 210
+;   :red 210
 ;   :green 50
 ;   :blue 90
+
+;   :red 210   40  : 10 = 4
+;   :green 50  200 : 10 = 20
+;   :blue 90   160 : 10 = 16
 
 (defn printer [& text]
   (println text)
@@ -35,6 +42,7 @@
   (.fillRect g x 0 bar-size height))
 
 (defn bar-calculator [g {x :location red :red green :green blue :blue}]
+    (printer (ceil (/ width bar-size)) width bar-size)
     (draw-balk g x (Color. red green blue))
   )
 
