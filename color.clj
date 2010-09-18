@@ -16,14 +16,6 @@
    :green 20
    :blue 16})
 
-;   :red 210
-;   :green 50
-;   :blue 90
-
-;   :red 210   40  : 10 = 4
-;   :green 50  200 : 10 = 20
-;   :blue 90   160 : 10 = 16
-
 (defn printer [& text]
   (println text)
   )
@@ -41,15 +33,14 @@
   (.setColor g color)
   (.fillRect g x 0 bar-size height))
 
-;(defn bar-calculator
-;  "Calculator works from the outside in. so f must me inverted"
-;  [f m]
-;  (fn
-;    [bars x red green blue]
-;      (if (zero? bars)
-;        '()
-;        (cons (f (* bars x) bar-size) (- 255 (* bars red)) (- 255 (* bars green)) (- 255 (* bars blue)) (m (dec bars) x red green blue))
-;        )))
+(defn draw-bars [g bars]
+    (if (empty? bars)
+    "done"
+    (do
+      (let [[x red green blue] (first bars)]
+      (draw-bar g x (Color. red green blue))
+      (draw-bars g (rest bars))))
+    ))
 
 (defn calculate-color [bar color]
   (let [color-number (- 255 (* bar color))]
@@ -65,10 +56,7 @@
 
 
 (defn bar-draw [g {x :location red :red green :green blue :blue}]
-    ;(printer (Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )))
-    (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue)
-    ;(bar-loop (Math/ceil (/ width bar-size)) x #(+ bar-size %) red green blue)
-    (draw-bars (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
+    (draw-bars g (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
     (draw-bar g x (Color. 255 255 255))
   )
 
@@ -107,3 +95,18 @@
       (.setLocationRelativeTo nil)
     )[main-bar])
   )
+
+
+    ;(printer (Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )))
+    ;(calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue)
+    ;(bar-loop (Math/ceil (/ width bar-size)) x #(+ bar-size %) red green blue)
+
+;(defn bar-calculator
+;  "Calculator works from the outside in. so f must me inverted"
+;  [f m]
+;  (fn
+;    [bars x red green blue]
+;      (if (zero? bars)
+;        '()
+;        (cons (f (* bars x) bar-size) (- 255 (* bars red)) (- 255 (* bars green)) (- 255 (* bars blue)) (m (dec bars) x red green blue))
+;        )))
