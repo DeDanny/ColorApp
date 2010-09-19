@@ -36,11 +36,9 @@
 (defn draw-bars [g bars]
     (if (empty? bars)
     "done"
-    (do
-      (let [[x red green blue] (first bars)]
-      (draw-bar g x (Color. red green blue))
-      (draw-bars g (rest bars))))
-    ))
+      (let [[x red green blue] (last bars)]
+      (do (draw-bar g x (Color. red green blue)) (draw-bars g (rest bars)))
+      )))
 
 (defn calculate-color [bar color]
   (let [color-number (- 255 (* bar color))]
