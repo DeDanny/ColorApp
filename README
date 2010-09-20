@@ -1,4 +1,4 @@
-A application in clojue.
+A application in clojure.
 
 It finds the mouse. Makes a gradiant started from the mouse position to the sides.
 
