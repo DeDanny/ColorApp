@@ -97,18 +97,3 @@
       (.setLocationRelativeTo nil)
     )[main-bar])
   )
-
-
-    ;(printer (Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )))
-    ;(calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue)
-    ;(bar-loop (Math/ceil (/ width bar-size)) x #(+ bar-size %) red green blue)
-
-;(defn bar-calculator
-;  "Calculator works from the outside in. so f must me inverted"
-;  [f m]
-;  (fn
-;    [bars x red green blue]
-;      (if (zero? bars)
-;        '()
-;        (cons (f (* bars x) bar-size) (- 255 (* bars red)) (- 255 (* bars green)) (- 255 (* bars blue)) (m (dec bars) x red green blue))
-;        )))
