@@ -8,13 +8,13 @@
 
 (def width 1200)
 (def height 300)
-(def bar-size 10)
+(def bar-size 5)
 
 (defn main-bar []
   {:location (- (/ width 2) (/ bar-size 2))
-   :red 4
-   :green 20
-   :blue 16})
+   :red 15
+   :green 2
+   :blue 1})
 
 (defn printer [& text]
   (println text)
@@ -60,14 +60,8 @@
         ))
 
 (defn bar-draw [g {x :location red :red green :green blue :blue}]
-    ;(draw-bars g (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
-    ;(draw-bars g (calculate-left(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
-    ;(printer (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
-    ;(printer (calculate-left(Math/ceil (/ x bar-size)) x red green blue))
-    
     (draw-bars g (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
     (draw-bars g (calculate-left(Math/ceil (/ x bar-size)) x red green blue))
-    ;(draw-bars g '((250.0 230.0 175.0 15.0) (300.0 210.0 160.0 5.0)))
     (draw-bar g x (Color. 255 255 255))
   )
 
