@@ -8,7 +8,7 @@
 
 (def width 1200)
 (def height 300)
-(def bar-size 5)
+(def bar-size 10)
 
 (defn main-bar []
   {:location (- (/ width 2) (/ bar-size 2))
@@ -26,8 +26,7 @@
 
 (defn set-zero-bar [main-bar x]
   (dosync
-    (alter main-bar x-update x)
-       ))
+    (alter main-bar x-update x)))
 
 (defn draw-bar [g x color]
   (.setColor g color)
@@ -45,6 +44,13 @@
     (if (< color-number 0)
       0
       color-number)))
+
+(defn colors-random [main-bar]
+  (assoc main-bar :red (rand-int 20) :green (rand-int 20) :blue (rand-int 20)))
+
+(defn random-color [main-bar]
+  (dosync
+    (alter main-bar colors-random)))
 
 (defn calculate-right [bars x red green blue]
       (if (zero? bars)
@@ -75,7 +81,9 @@
     (mouseClicked [e])
     (mouseEntered [e])
     (mouseExited [e])
-    (mousePressed [e])
+    (mousePressed [e]
+      (random-color main-bar)
+      (.repaint this))
     (mouseReleased [e])
     ))
 
