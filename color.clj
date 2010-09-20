@@ -34,11 +34,12 @@
   (.fillRect g x 0 bar-size height))
 
 (defn draw-bars [g bars]
-    (if (empty? bars)
-    "done"
-      (let [[x red green blue] (last bars)]
-      (do (draw-bar g x (Color. red green blue)) (draw-bars g (rest bars)))
-      )))
+  (loop [barss bars extra 0]
+    ;(printer barss ":" extra)
+    (if-not (empty? barss)
+      (let [[x red green blue] (first barss)]
+        (draw-bar g x (Color. (int red) (int green) (int blue)))
+          (recur (rest barss) (inc extra))) "EIND")))
 
 (defn calculate-color [bar color]
   (let [color-number (- 255 (* bar color))]
@@ -52,9 +53,21 @@
         (cons (list (+ x (* bars bar-size)) (calculate-color bars red) (calculate-color bars green) (calculate-color bars blue)) (calculate-right (dec bars) x red green blue))
         ))
 
+(defn calculate-left [bars x red green blue]
+      (if (zero? bars)
+        '()
+        (cons (list (- x (* bars bar-size)) (calculate-color bars red) (calculate-color bars green) (calculate-color bars blue)) (calculate-left (dec bars) x red green blue))
+        ))
 
 (defn bar-draw [g {x :location red :red green :green blue :blue}]
+    ;(draw-bars g (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
+    ;(draw-bars g (calculate-left(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
+    ;(printer (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
+    ;(printer (calculate-left(Math/ceil (/ x bar-size)) x red green blue))
+    
     (draw-bars g (calculate-right(Math/ceil (/ (- width (Math/floor (+ x bar-size))) bar-size )) x red green blue))
+    (draw-bars g (calculate-left(Math/ceil (/ x bar-size)) x red green blue))
+    ;(draw-bars g '((250.0 230.0 175.0 15.0) (300.0 210.0 160.0 5.0)))
     (draw-bar g x (Color. 255 255 255))
   )
 
@@ -62,8 +75,7 @@
   (proxy [JPanel MouseListener MouseMotionListener ] []
     (paintComponent [g]
       (proxy-super paintComponent g)
-      (bar-draw g @main-bar)
-      )
+      (bar-draw g @main-bar))
     (mouseMoved [e]
       (set-zero-bar main-bar (.getX e))
       (.repaint this))
@@ -72,14 +84,12 @@
     (mouseExited [e])
     (mousePressed [e])
     (mouseReleased [e])
-    )
-  )
+    ))
 
 (defn color-bar []
   (let [frame  (JFrame. "Color")
         main-bar (ref (main-bar))
-        panel  (color-panel frame main-bar)
-        ]
+        panel  (color-panel frame main-bar)]
     (doto panel
       (.setFocusable true)
       (.addMouseListener panel)
