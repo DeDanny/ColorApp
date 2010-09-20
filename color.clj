@@ -35,7 +35,6 @@
 
 (defn draw-bars [g bars]
   (loop [barss bars extra 0]
-    ;(printer barss ":" extra)
     (if-not (empty? barss)
       (let [[x red green blue] (first barss)]
         (draw-bar g x (Color. (int red) (int green) (int blue)))
